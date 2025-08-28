@@ -1,8 +1,14 @@
 import React from "react";
 
-function Friend({ friend }) {
+function Friend({ friend, onSelection, selectedFriend }) {
+  const isSelected = selectedFriend?.id === friend.id;
+
+  function handleSelection(friend) {
+    onSelection(friend);
+  }
+
   return (
-    <li>
+    <li className={`${isSelected ? "selected" : ""}`}>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
       <p
@@ -16,7 +22,9 @@ function Friend({ friend }) {
           ? `You and ${friend.name} are even.`
           : `You own ${friend.name} ${Math.abs(friend.balance)}k `}
       </p>
-      <button className="button">Select</button>
+      <button className="button" onClick={() => handleSelection(friend)}>
+        {isSelected ? "Close" : "Select"}
+      </button>
     </li>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NewFriendForm } from "./NewFriendForm";
 import FriendsList from "./FriendsList";
 import Button from "./Button";
+import { SplitBillForm } from "./SplitBillForm";
 
 const initialFriends = [
   {
@@ -27,6 +28,7 @@ const initialFriends = [
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [friendsList, setFriendsList] = useState(initialFriends);
+  const [selectedFriend, setSelectedFriend] = useState(null);
 
   function handleToggleShowAddFriend() {
     setShowAddFriend(!showAddFriend);
@@ -37,10 +39,21 @@ function App() {
     setShowAddFriend(false); // hide the form
   }
 
+  function handleSelection(newFriend) {
+    setSelectedFriend(
+      (currentFriend) => (currentFriend?.id === newFriend.id ? null : newFriend) // Optional Chaining?
+    );
+    setShowAddFriend(false);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friendsList={friendsList} />
+        <FriendsList
+          friendsList={friendsList}
+          onSelection={handleSelection}
+          selectedFriend={selectedFriend}
+        />
         <NewFriendForm
           showAddFriend={showAddFriend}
           onAddNewFriend={handleAddNewFriend}
@@ -51,28 +64,8 @@ function App() {
         />
       </div>
 
-      <SplitBillForm />
+      {selectedFriend && <SplitBillForm selectedFriend={selectedFriend} />}
     </div>
-  );
-}
-
-function SplitBillForm() {
-  return (
-    <form className="form-split-bill">
-      <h2>Split a bill with X</h2>
-      <label>💰 Bill value</label>
-      <input type="text"></input> {/* Remember to convert from str to number */}
-      <label>👤 Your expense</label>
-      <input type="text"></input>
-      <label>👩🏽‍🤝‍🧑🏼 X's expense</label>
-      <input type="text" disabled></input>
-      <label>🤑 Who's paying the bill?</label>
-      <select>
-        <option value="you">You</option>
-        <option value="X">X</option>
-      </select>
-      <button className="button">Split bill</button>
-    </form>
   );
 }
 

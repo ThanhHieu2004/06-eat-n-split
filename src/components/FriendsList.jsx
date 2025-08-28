@@ -1,12 +1,17 @@
 import React from "react";
 import Friend from "./Friend";
 
-function FriendsList({ friendsList }) {
+function FriendsList({ friendsList, onSelection, selectedFriend }) {
   return (
     <div className="sidebar">
       <ul>
         {friendsList.map((friend) => (
-          <Friend friend={friend} key={friend.id} />
+          <Friend
+            friend={friend}
+            key={friend.id}
+            onSelection={onSelection}
+            selectedFriend={selectedFriend}
+          />
         ))}
       </ul>
     </div>
