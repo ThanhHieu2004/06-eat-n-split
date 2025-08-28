@@ -47,8 +47,6 @@ function App() {
   }
 
   function handleSplitBill(bill) {
-    console.log(bill);
-
     setFriendsList((friendList) =>
       friendList.map((friend) =>
         friend.id === selectedFriend.id
@@ -56,6 +54,8 @@ function App() {
           : friend
       )
     );
+
+    setSelectedFriend(null);
   }
 
   return (
