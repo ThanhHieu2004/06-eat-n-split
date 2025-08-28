@@ -1,7 +1,11 @@
 import React from "react";
 
-function Button({ children }) {
-  return <button className="button">{children}</button>;
+function Button({ showAddFriend, onToggleShowAddFriend }) {
+  return (
+    <button className="button" onClick={onToggleShowAddFriend}>
+      {showAddFriend ? "Close" : "Add friend"}
+    </button>
+  );
 }
 
 export default Button;
